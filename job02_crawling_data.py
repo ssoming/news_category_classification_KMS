@@ -23,12 +23,14 @@ options.add_argument('headless')    # browser window off
 service = ChromeService(executable_path=ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
 
-url = 'https://news.naver.com/section/100'
+df_titles = pd.DataFrame()
+titles = []
+
+url = 'https://news.naver.com/section/104'
 driver.get(url)
 button_xpath = '//*[@id="newsct"]/div[4]/div/div[2]/a'
 # '//*[@id="newsct"]/div[4]/div/div[2]/a' # 뉴스 더보기에 대한 버튼에 대한 Xpath
 
-titles = []
 
 for i in range(5):
     driver.find_element(By.XPATH, button_xpath).click()
@@ -43,3 +45,10 @@ for i in range(1, (5)):
             titles.append(title)
         except:
             print('error',i, j)
+
+df_section_titles = pd.DataFrame(titles, columns=['title'])
+df_section_titles['category'] = 'World'
+df_titles = pd.concat([df_titles, df_section_titles], ignore_index=True)
+
+df_titles.info()
+df_titles.to_csv('./data/naver_news_world_{}.csv'.format(datetime.datetime.now().strftime('%Y%m%d')), index=False)
