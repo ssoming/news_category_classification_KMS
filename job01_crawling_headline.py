@@ -5,7 +5,7 @@ import re           # 내장 라이브러리
 import datetime     # 내장 라이브러리
 
 
-category = ['Politics', 'Economic', 'Social', 'Culture', 'World', 'IT']
+category = ['Politics', 'Economic', 'Social', 'Culture', 'World', 'IT_Science']
 df_titles = pd.DataFrame()
 
 for i in range(6):
